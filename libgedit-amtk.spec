@@ -5,13 +5,12 @@
 #
 Name     : libgedit-amtk
 Version  : 5.8.0
-Release  : 1
+Release  : 2
 URL      : https://gedit-technology.net/tarballs/libgedit-amtk/libgedit-amtk-5.8.0.tar.xz
 Source0  : https://gedit-technology.net/tarballs/libgedit-amtk/libgedit-amtk-5.8.0.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : LGPL-3.0
-Requires: libgedit-amtk-data = %{version}-%{release}
 Requires: libgedit-amtk-lib = %{version}-%{release}
 Requires: libgedit-amtk-license = %{version}-%{release}
 Requires: libgedit-amtk-locales = %{version}-%{release}
@@ -30,19 +29,10 @@ BuildRequires : pkgconfig(gtk+-3.0)
 libgedit-amtk - Actions, Menus and Toolbars Kit for GTK applications
 ====================================================================
 
-%package data
-Summary: data components for the libgedit-amtk package.
-Group: Data
-
-%description data
-data components for the libgedit-amtk package.
-
-
 %package dev
 Summary: dev components for the libgedit-amtk package.
 Group: Development
 Requires: libgedit-amtk-lib = %{version}-%{release}
-Requires: libgedit-amtk-data = %{version}-%{release}
 Provides: libgedit-amtk-devel = %{version}-%{release}
 Requires: libgedit-amtk = %{version}-%{release}
 
@@ -61,7 +51,6 @@ doc components for the libgedit-amtk package.
 %package lib
 Summary: lib components for the libgedit-amtk package.
 Group: Libraries
-Requires: libgedit-amtk-data = %{version}-%{release}
 Requires: libgedit-amtk-license = %{version}-%{release}
 
 %description lib
@@ -93,7 +82,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1695736594
+export SOURCE_DATE_EPOCH=1695737287
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -117,14 +106,12 @@ mkdir -p %{buildroot}/usr/share/package-licenses/libgedit-amtk
 cp %{_builddir}/libgedit-amtk-%{version}/LICENSES/LGPL-3.0-or-later.txt %{buildroot}/usr/share/package-licenses/libgedit-amtk/757b86330df80f81143d5916b3e92b4bcb1b1890 || :
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang libgedit-amtk-5
+## Remove excluded files
+rm -f %{buildroot}*/usr/lib64/girepository-1.0/Amtk-5.typelib
+rm -f %{buildroot}*/usr/share/gir-1.0/Amtk-5.gir
 
 %files
 %defattr(-,root,root,-)
-
-%files data
-%defattr(-,root,root,-)
-/usr/lib64/girepository-1.0/Amtk-5.typelib
-/usr/share/gir-1.0/*.gir
 
 %files dev
 %defattr(-,root,root,-)
